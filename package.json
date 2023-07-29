@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bizzabo-api": "^0.2.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^3.3.2",
+    "requests": "^0.3.0",
+    "xlsx": "^0.18.5"
+  },
+  "type": "module"
+}
