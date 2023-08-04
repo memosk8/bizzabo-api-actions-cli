@@ -17,7 +17,9 @@ cli.question('Select an option: \t', opt => {
   switch (opt) {
     case '0':
       console.log("\nExiting...\n");
-      timer(1000).then(() => { console.log("done"); cli.close() });
+      timer(1000).then(() => { 
+        console.log("done"); cli.close() 
+      });
       break;
 
     case '1':
