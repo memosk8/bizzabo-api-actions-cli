@@ -14,10 +14,7 @@ import xlsx from "xlsx";
  * A collection of all the rows 
  * 
  */
-function readFile(path) {
+export default function readFile(path) {
   const file = xlsx.readFile(path);
-  const registrations = xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[0]]);
-  return registrations;
+  return xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[0]]);;
 }
-
-export default readFile;
