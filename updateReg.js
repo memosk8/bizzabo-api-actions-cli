@@ -14,16 +14,15 @@ import 'dotenv/config.js'
  * An array with the responses of all the API calls
  */
 
-export default async function updateReg(registrations) {
-
+export default async function updateReg(registrations, token) {
   registrations.forEach(async (reg) => {
 
-    let url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}`
+    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}`
 
     const options = {
       'method': 'PUT',
       'headers': {
-        'Authorization': process.env.API_TOKEN,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/vnd.bizzabo.v2.0+json',
         'Accept': 'application/json'
       },
@@ -41,7 +40,7 @@ export default async function updateReg(registrations) {
     try {
       const response = await fetch(url, options)
       const data = await response.json()
-      console.log(data, '\n\n\t~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \n')
+      console.log(reg["Ticket Number"],response.status, data.status)
     }
     catch (error) {
       console.error(error)
