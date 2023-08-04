@@ -40,7 +40,7 @@ export default async function updateReg(registrations, token) {
     try {
       const response = await fetch(url, options)
       const data = await response.json()
-      console.log(reg["Ticket Number"],response.status, data.status)
+      console.log(reg["Ticket Number"],response.status, data.status, Date(Date.parse(data.modified).toLocaleString()))
     }
     catch (error) {
       console.error(error)
