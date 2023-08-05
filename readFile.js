@@ -14,7 +14,9 @@ import xlsx from "xlsx";
  * A collection of all the rows 
  * 
  */
+
 export default function readFile(path) {
-  const file = xlsx.readFile(path);
-  return xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[0]]);;
+  const file = xlsx.readFile(path)
+  const sheetToJson = xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[0]])
+  return sheetToJson
 }
