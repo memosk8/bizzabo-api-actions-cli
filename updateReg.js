@@ -26,8 +26,11 @@ export default async function updateReg(registrations, token) {
         'Content-Type': 'application/vnd.bizzabo.v2.0+json',
         'Accept': 'application/json'
       },
+
+      /*  body has to be stringified, if not 
+          the api will return an internal error 500  */
+
       'body': JSON.stringify({
-        //  body has to be stringified, if not the api will return an internal error 500
         'properties': {
           'firstName': reg['First Name'],
           'lastName': reg['Last Name'],
@@ -38,9 +41,9 @@ export default async function updateReg(registrations, token) {
     }
 
     try {
-      const response = await fetch(url, options)
-      const data = await response.json()
-      console.log(reg["Ticket Number"],response.status, data.status, Date(Date.parse(data.modified).toLocaleString()))
+      const res = await fetch(url, options)
+      const body = await res.json()
+      console.log(body.status, res.status, res.url, body.modified, Math.floor(process.uptime()))
     }
     catch (error) {
       console.error(error)
