@@ -1,6 +1,7 @@
 import * as readline from 'readline';
 import readFile from "./readFile.js"
-import updateReg from './updateReg.js';
+import updateReg from './UpdateReg.js';
+import uploadContacts from './UploadContacts.js';
 
 const cli = readline.createInterface({
   input: process.stdin,
@@ -10,7 +11,7 @@ const cli = readline.createInterface({
 /* main menu */
 
 console.log(" 1 Bulk Update Registrations")
-console.log(" 2 Bulk Update Contacts")
+console.log(" 2 Bulk Upload Contacts")
 console.log(" 0 exit")
 
 cli.question('Select an option:  ', opt => {
@@ -32,8 +33,14 @@ cli.question('Select an option:  ', opt => {
       break;
 
     case '2':
-      console.log('Working on it ...')
-      cli.close()
+      cli.question("File path: ", (path) => {
+        cli.question("API Token: ", (tk) => {
+          cli.question("Event ID: ", (eventID) => {
+            uploadContacts(readFile(path), tk, eventID)
+            cli.close()
+          })
+        })
+      })
       break;
 
     default:
