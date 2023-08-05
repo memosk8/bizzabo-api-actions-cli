@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import 'dotenv/config.js'
+import sleep from 'sleep-promise';
 
 /**
  * 
@@ -8,14 +8,16 @@ import 'dotenv/config.js'
  * 
  * @description
  * Creates the URL to call based upon each ticket number, generates
- * the headers and body of the request, and makes the call to the API
+ * the headers and body of the request, and makes the call to the API.
+ * Logs the endpoints, status and   
  * 
- * @returns
- * An array with the responses of all the API calls
  */
 
 export default async function updateReg(registrations, token) {
-  registrations.forEach(async (reg) => {
+
+  for (let i = 0; i < registrations.length; i++) {
+    
+    const reg = registrations[i];
 
     const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}`
 
@@ -43,10 +45,11 @@ export default async function updateReg(registrations, token) {
     try {
       const res = await fetch(url, options)
       const body = await res.json()
-      console.log(body.status, res.status, res.url, body.modified, Math.floor(process.uptime()))
+      console.log(res.status, res.url, body.modified, Math.floor(process.uptime()))
     }
     catch (error) {
       console.error(error)
     }
-  })
+    sleep(300)
+  }
 }
