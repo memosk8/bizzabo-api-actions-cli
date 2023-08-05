@@ -1,6 +1,6 @@
 import * as readline from 'readline';
 import readFile from "./readFile.js"
-import updateReg from './UpdateReg.js';
+import updateReg from './updateReg.js';
 
 /* Timer helper to wait in the terminal */
 const timer = ms => new Promise(res => setTimeout(res, ms));
