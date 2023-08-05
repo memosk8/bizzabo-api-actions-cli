@@ -5,6 +5,7 @@
     "fetch": "^1.1.0",
     "node-fetch": "^3.3.2",
     "requests": "^0.3.0",
+    "sleep-promise": "^9.1.0",
     "xlsx": "^0.18.5"
   },
   "type": "module"
