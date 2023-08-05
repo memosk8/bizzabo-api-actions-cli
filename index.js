@@ -1,12 +1,12 @@
-import * as readline from 'readline';
+import * as readline from 'readline'
 import readFile from "./readFile.js"
-import updateReg from './UpdateReg.js';
-import uploadContacts from './UploadContacts.js';
+import updateReg from './UpdateReg.js'
+import uploadContacts from './UploadContacts.js'
 
 const cli = readline.createInterface({
   input: process.stdin,
   output: process.stdout
-});
+})
 
 /* main menu */
 
@@ -17,7 +17,7 @@ console.log(" 0 exit")
 cli.question('Select an option:  ', opt => {
   switch (opt) {
     case '0':
-      console.log("\nExiting...\n");
+      console.log("\nExiting...\n")
       timer(1000).then(() => {
         console.log("done"); cli.close()
       });
