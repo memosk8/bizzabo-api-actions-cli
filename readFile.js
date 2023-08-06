@@ -11,7 +11,7 @@ import xlsx from "xlsx";
  * each one representing a row in the file
  * 
  * @returns {Array<Object>}
- * A collection of all the rows 
+ * An array of all the rows in the spreadsheet
  * 
  */
 

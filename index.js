@@ -21,7 +21,7 @@ cli.question('Select an option:  ', opt => {
       timer(1000).then(() => {
         console.log("done"); cli.close()
       });
-      break;
+      break
 
     case '1':
       cli.question("File path: ", (path) => {
@@ -30,7 +30,7 @@ cli.question('Select an option:  ', opt => {
           cli.close()
         })
       })
-      break;
+      break
 
     case '2':
       cli.question("File path: ", (path) => {
@@ -41,11 +41,11 @@ cli.question('Select an option:  ', opt => {
           })
         })
       })
-      break;
+      break
 
     default:
       console.log("Please choose a valid option...")
       cli.close()
-      break;
+      break
   }
 });
