@@ -45,15 +45,15 @@ export default async function updateReg(registrations, token) {
 
     try {
       const res = await fetch(url, options)
-      const body = await res.json()
-      if (body.modified === undefined) {
-        console.log(chalk.red.bgBlack('Unable to update registration, please check your API token\n'))
+      if (res.status === 401) {
+        console.log(chalk.red.bgBlack('<- Please check your API token ->\n'))
         process.exit(1)
       }
+      const body = await res.json()
       console.log(
         chalk.bgGreenBright.bold(res.status),
         chalk.cyan(res.url),
-        chalk.green(body.modified.split('T')[0]), 'T', chalk.yellow(body.modified.split('T')[1])
+        chalk.green(body.modified.split('T')[0]), chalk.red('T'), chalk.yellow(body.modified.split('T')[1])
       )
     }
     catch (error) {
