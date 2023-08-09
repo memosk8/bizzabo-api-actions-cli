@@ -11,11 +11,11 @@ let opt = ''
 
 do {
   console.clear()
-  console.log(chalk.green('1 - '), chalk.yellow.bgBlack.italic("Bulk Update Registrations"))
-  console.log(chalk.green('2 - '), chalk.yellow.bgBlack.italic("Bulk Upload Contacts"))
-  console.log(chalk.green('0 - '), chalk.redBright.bgBlack.italic("Exit\n"))
+  console.log(chalk.green('1 - '), chalk.yellow.bold("Bulk Update Registrations"))
+  console.log(chalk.green('2 - '), chalk.yellow.bold("Bulk Upload Contacts"))
+  console.log(chalk.green('0 - '), chalk.redBright.bold("Exit\n"))
 
-  opt = prompt(chalk.green.bgBlack('Select and option: '))
+  opt = prompt(chalk.greenBright('Select an option: '))
 
   switch (opt) {
 
@@ -36,9 +36,9 @@ do {
       var tk = prompt(chalk.green('API token: '))
       console.log()
       await updateReg(registrations, tk)
-      console.log(chalk.green('\n======================'))
+      console.log(chalk.green('\n==============================='))
       console.log(chalk.rgb(250,189,5)('Bulk Update Registrations complete'))
-      console.log(chalk.green('======================\n'))
+      console.log(chalk.green('===============================\n'))
       process.exit(1)
 
 
