@@ -11,9 +11,9 @@ let opt = ''
 
 do {
   console.clear()
-  console.log(chalk.green('1 - '), chalk.yellow.bold("Bulk Update Registrations"))
-  console.log(chalk.green('2 - '), chalk.yellow.bold("Bulk Upload Contacts"))
-  console.log(chalk.green('0 - '), chalk.redBright.bold("Exit\n"))
+  console.log(chalk.green('1 - '), chalk.yellow("Bulk Update Registrations"))
+  console.log(chalk.green('2 - '), chalk.yellow("Bulk Upload Contacts"))
+  console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
   opt = prompt(chalk.greenBright('Select an option: '))
 
@@ -25,7 +25,7 @@ do {
 
     case '1':
       console.clear()
-      console.log(chalk.yellow.bold.bgBlack('\n\tBulk Update Registration\n'))
+      console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
       var path = prompt(chalk.green('File path: '))
       try {
         var registrations = readFile(path)
@@ -36,9 +36,9 @@ do {
       var tk = prompt(chalk.green('API token: '))
       console.log()
       await updateReg(registrations, tk)
-      console.log(chalk.green('\n==============================='))
-      console.log(chalk.rgb(250,189,5)('Bulk Update Registrations complete'))
-      console.log(chalk.green('===============================\n'))
+      console.log(chalk.green('\n\t======================================'))
+      console.log(chalk.green('\t|'), chalk.rgb(250, 189, 5)('Bulk Update Registrations complete'), chalk.green('|'))
+      console.log(chalk.green('\t======================================\n'))
       process.exit(1)
 
 

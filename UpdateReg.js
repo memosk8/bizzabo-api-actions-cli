@@ -51,7 +51,7 @@ export default async function updateReg(registrations, token) {
       }
       const body = await res.json()
       console.log(
-        chalk.bgGreenBright.bold(res.status),
+        chalk.bgGray.bold.yellow(res.status),
         chalk.cyan(res.url),
         chalk.green(body.modified.split('T')[0]), chalk.red('T'), chalk.yellow(body.modified.split('T')[1])
       )
