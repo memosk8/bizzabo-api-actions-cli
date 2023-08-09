@@ -45,13 +45,16 @@ export default async function updateReg(registrations, token) {
     try {
       const res = await fetch(url, options)
       const body = await res.json()
-      console.log(res.status, res.url, body.modified)
+      if (res.status != 200) 
+        return false
+      else
+        return res
     }
     catch (error) {
       console.error(error)
     }
 
     /* to avoid the API call limit per second  */ 
-    sleep(100).then(() => console.log(''))
+    sleep(100)
   }
 }
