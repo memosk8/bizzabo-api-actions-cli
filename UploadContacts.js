@@ -40,6 +40,6 @@ export default async function uploadContacts(contacts, token, eventID) {
     }
     
     /* to avoid the API call limit per second  */
-    sleep(200).then(() => console.log('->'))
+    sleep(100).then(() => console.log(''))
   }
 }
