@@ -8,8 +8,6 @@ let opt = ''
 
 /* main menu */
 
-
-
 do {
   console.clear()
   console.log(" 1 Bulk Update Registrations")
