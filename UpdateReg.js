@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import sleep from "./sleep.js"
+import chalk from "chalk";
 
 /**
  * 
@@ -45,16 +46,17 @@ export default async function updateReg(registrations, token) {
     try {
       const res = await fetch(url, options)
       const body = await res.json()
-      if (res.status != 200) 
-        return false
-      else
-        return res
+      console.log(
+        chalk.bgGreenBright.bold(res.status), 
+        chalk.cyan(res.url), 
+        chalk.green(body.modified.split('T')[0]),'|',chalk.yellow(body.modified.split('T')[1]))
+      sleep(100)
     }
     catch (error) {
       console.error(error)
     }
 
-    /* to avoid the API call limit per second  */ 
+    /* to avoid the API call limit per second  */
     sleep(100)
   }
 }
