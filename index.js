@@ -1,12 +1,10 @@
-import * as readline from 'readline'
 import readFile from "./readFile.js"
 import updateReg from './UpdateReg.js'
 import uploadContacts from './UploadContacts.js'
+import PromptSync from 'prompt-sync'
 
-const cli = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
+const prompt = PromptSync({ sigint: true })
+let opt = ''
 
 /* main menu */
 
@@ -14,23 +12,23 @@ console.log(" 1 Bulk Update Registrations")
 console.log(" 2 Bulk Upload Contacts")
 console.log(" 0 exit")
 
-cli.question('Select an option:  ', opt => {
+opt = prompt('Select and option:  ')
+
+do {
+
   switch (opt) {
+
     case '0':
       console.log("\nExiting...\n")
-      timer(1000).then(() => {
-        console.log("done"); cli.close()
-      });
-      break
+      process.exit(1)
 
     case '1':
-      cli.question("File path: ", (path) => {
-        cli.question("API Token: ", (tk) => {
-          updateReg(readFile(path), tk)
-          cli.close()
-        })
-      })
-      break
+      const path = prompt('File path: ')
+      const tk = prompt('API token: ')
+      const registrations = readFile(path)
+      await updateReg(registrations, tk)
+      console.log('Bulk Update Registrations complete')
+      process.exit(1)
 
     case '2':
       cli.question("File path: ", (path) => {
@@ -44,8 +42,9 @@ cli.question('Select an option:  ', opt => {
       break
 
     default:
-      console.log("Please choose a valid option...")
-      cli.close()
-      break
-  }
-});
+      console.log('< Please select a valid option >')
+      process.exit(1)
+  };
+
+} while (opt != '0');
+
