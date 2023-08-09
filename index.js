@@ -8,13 +8,15 @@ let opt = ''
 
 /* main menu */
 
-console.log(" 1 Bulk Update Registrations")
-console.log(" 2 Bulk Upload Contacts")
-console.log(" 0 exit")
 
-opt = prompt('Select and option:  ')
 
 do {
+  console.clear()
+  console.log(" 1 Bulk Update Registrations")
+  console.log(" 2 Bulk Upload Contacts")
+  console.log(" 0 exit")
+
+  opt = prompt('\nSelect and option:  ')
 
   switch (opt) {
 
@@ -27,7 +29,7 @@ do {
       const tk = prompt('API token: ')
       const registrations = readFile(path)
       await updateReg(registrations, tk)
-      console.log('Bulk Update Registrations complete')
+      console.log('\n Bulk Update Registrations complete \n')
       process.exit(1)
 
     case '2':
@@ -43,7 +45,7 @@ do {
 
     default:
       console.log('< Please select a valid option >')
-      process.exit(1)
+      break
   };
 
 } while (opt != '0');
