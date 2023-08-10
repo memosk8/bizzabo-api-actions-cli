@@ -1,4 +1,4 @@
-# Bizzabo API bulk actions
+# Bizzabo API actions
 
 ## Events
 
