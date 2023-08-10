@@ -39,7 +39,7 @@ do {
       await updateReg(registrations, tk)
       await sleep(300)
       console.log(chalk.green('\n======================================'))
-      console.log(chalk.green('|'), chalk.rgb(250, 189, 5).bold('Bulk Update Registrations complete'), chalk.green('|'))
+      console.log(chalk.green('|'), chalk.rgb(250, 100, 5).bold('Bulk Update Registrations complete'), chalk.green('|'))
       console.log(chalk.green('======================================\n'))
       process.exit(1)
 
@@ -54,7 +54,7 @@ do {
       process.exit(1)
 
     default:
-      console.log(chalk.bgRed.black("invalid option"))
+      console.log('\n',chalk.bgRed.black("invalid option"))
       await sleep(2000)
       break
   };

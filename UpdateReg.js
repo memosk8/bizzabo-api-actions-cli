@@ -51,7 +51,7 @@ export default async function updateReg(registrations, token) {
       }
       const body = await res.json()
       console.log(
-        chalk.bgBlackBright.cyan.bold(res.status),
+        chalk.bgBlue.magentaBright.bold(res.status),
         chalk.cyan(res.url),
         chalk.green(body.modified.split('T')[0]), chalk.red('T'), chalk.yellow(body.modified.split('T')[1])
       )
@@ -61,6 +61,6 @@ export default async function updateReg(registrations, token) {
     }
 
     /* to avoid the API call limit per second  */
-    await sleep(100)
+    // await sleep(100)
   }
 }
