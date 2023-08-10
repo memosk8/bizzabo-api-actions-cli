@@ -61,6 +61,6 @@ export default async function updateReg(registrations, token) {
     }
 
     /* to avoid the API call limit per second  */
-    sleep(100)
+    await sleep(100)
   }
 }
