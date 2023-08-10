@@ -52,6 +52,7 @@ do {
       process.exit(1)
 
     default:
+      console.log("invalid option")
       break
   };
 
