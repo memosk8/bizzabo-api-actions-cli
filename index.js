@@ -25,21 +25,36 @@ do {
       process.exit(1)
 
     case '1':
-      console.clear()
-      console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
-      var path = prompt(chalk.green('File path: '))
-      try {
-        var registrations = readFile(path)
-      } catch (error) {
-        console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
-        process.exit()
-      }
-      var tk = prompt(chalk.green('API token: '))
-      console.log()
-      await updateReg(registrations, tk)
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
+        var registrations
+        var path = prompt(chalk.green('File path: '))
+        try {
+          registrations = readFile(path)
+        } catch (error) {
+          console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
+          await sleep(2000)
+        }
+      } while (!registrations);
+
+      var isUpdated
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
+        console.log('File path: ' + path)
+        var tk = prompt(chalk.green('API token: '))
+        console.log()
+        isUpdated = await updateReg(registrations, tk)
+      } while (isUpdated === 'BAD_TOKEN')
+
       await sleep(300)
       console.log(chalk.green('\n======================================'))
-      console.log(chalk.green('|'), chalk.rgb(250, 100, 5).bold('Bulk Update Registrations complete'), chalk.green('|'))
+      console.log(
+        chalk.green('|'),
+        chalk.rgb(250, 100, 5).bold('Bulk Update Registrations complete'),
+        chalk.green('|')
+      )
       console.log(chalk.green('======================================\n'))
       process.exit(1)
 
@@ -54,7 +69,7 @@ do {
       process.exit(1)
 
     default:
-      console.log('\n',chalk.bgRed.black("invalid option"))
+      console.log('\n', chalk.bgRed.black("invalid option"))
       await sleep(2000)
       break
   };
