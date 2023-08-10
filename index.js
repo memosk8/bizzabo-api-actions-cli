@@ -3,6 +3,7 @@ import updateReg from './UpdateReg.js'
 import uploadContacts from './UploadContacts.js'
 import PromptSync from 'prompt-sync'
 import chalk from "chalk"
+import sleep from "./sleep.js"
 
 const prompt = PromptSync({ sigint: true })
 let opt = ''
@@ -53,6 +54,7 @@ do {
 
     default:
       console.log("invalid option")
+      sleep(2000)
       break
   };
 
