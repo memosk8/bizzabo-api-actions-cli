@@ -11,13 +11,17 @@
 * Add contact
 * Bulk add contacts
 * Get contact
-* Get all contacts
+* Get specific contacts
 * Update contact
 * Bulk update contacts
 * Delete contact
-* Delete all contacts
+* Bulk delete contacts
 * List contact lists
 
 # Registrations
 
-* Update registration
+* Transfer ticket
+* Event check in
+* Bulk transfer tickets
+* Bulk event check-in
+*
