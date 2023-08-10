@@ -1,4 +1,4 @@
-# Bizzabo API actions
+# Bizzabo API actions CLI
 
 ## Events
 
