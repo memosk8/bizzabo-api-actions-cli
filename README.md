@@ -18,10 +18,9 @@
 * Bulk delete contacts
 * List contact lists
 
-# Registrations
+## Registrations
 
 * Transfer ticket
 * Event check in
 * Bulk transfer tickets
 * Bulk event check-in
-*
