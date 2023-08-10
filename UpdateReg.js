@@ -12,6 +12,8 @@ import chalk from "chalk";
  * the headers and body of the request, and makes the call to the API.
  * Logs the endpoints, status and   
  * 
+ * @returns
+ * BAD_TOKEN if the provided token is invalid for the API - Error 401
  */
 
 export default async function updateReg(registrations, token) {
@@ -46,14 +48,13 @@ export default async function updateReg(registrations, token) {
     try {
       const res = await fetch(url, options)
       if (res.status === 401) {
-        console.log(chalk.red.bgBlack('<- Please check your API token ->\n'))
-        process.exit(1)
+        return 'BAD_TOKEN'
       }
       const body = await res.json()
       console.log(
-        chalk.bgBlue.magentaBright.bold(res.status),
+        chalk.green.bold(res.status),
         chalk.cyan(res.url),
-        chalk.green(body.modified.split('T')[0]), chalk.red('T'), chalk.yellow(body.modified.split('T')[1])
+        chalk.greenBright(body.modified.split('T')[0]) + chalk.red('T') + chalk.yellow(body.modified.split('T')[1])
       )
     }
     catch (error) {
