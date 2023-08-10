@@ -53,7 +53,7 @@ do {
       process.exit(1)
 
     default:
-      console.log("invalid option")
+      console.log(chalk.bgRed.black("invalid option"))
       await sleep(2000)
       break
   };
