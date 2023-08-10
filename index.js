@@ -54,7 +54,7 @@ do {
 
     default:
       console.log("invalid option")
-      sleep(2000)
+      await sleep(2000)
       break
   };
 
