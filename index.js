@@ -31,7 +31,7 @@ do {
       try {
         var registrations = readFile(path)
       } catch (error) {
-        console.error(chalk.bgBlack.red.bold('\n', 'An error ocurred with the file, please check the path', '\n'))
+        console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
         process.exit()
       }
       var tk = prompt(chalk.green('API token: '))
