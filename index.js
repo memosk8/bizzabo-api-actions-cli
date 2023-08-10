@@ -37,6 +37,7 @@ do {
       var tk = prompt(chalk.green('API token: '))
       console.log()
       await updateReg(registrations, tk)
+      await sleep(300)
       console.log(chalk.green('\n\t======================================'))
       console.log(chalk.green('\t|'), chalk.rgb(250, 189, 5).bold('Bulk Update Registrations complete'), chalk.green('|'))
       console.log(chalk.green('\t======================================\n'))
