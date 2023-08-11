@@ -7,6 +7,8 @@
  - List all account events
  - Get an specific event
 
+<hr style="border: 2px solid #2c8898">
+
 ## Contacts
 
  > GET https://api.bizzabo.com/api/contacts
