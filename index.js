@@ -9,7 +9,7 @@ const prompt = PromptSync({ sigint: true })
 
 /* main menu */
 
-  let opt = ''
+let opt = ''
 do {
   console.clear()
   console.log(chalk.green('1 - '), chalk.yellow("Bulk Update Registrations"))
