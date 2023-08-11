@@ -1,4 +1,4 @@
-# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
+# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg#bizzabo-api-actions-cli)
 
 ## Events
 
