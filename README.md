@@ -4,7 +4,7 @@
 
 #### 1. List all account events
 
-:green_circle: <a style="color:green"> GET https://api.bizzabo.com/api/events </a>
+ <p style="color:green"> GET </p> https://api.bizzabo.com/api/events 
 
 #### 2. Get an specific event
 
