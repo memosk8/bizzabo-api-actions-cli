@@ -3,6 +3,9 @@
 ## Events
 
 #### 1. List all account events
+
+> GET https://api.bizzabo.com/api/event
+
 #### 2. Get an specific event
 
 ## Contacts
