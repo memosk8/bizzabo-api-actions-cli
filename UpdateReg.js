@@ -13,7 +13,7 @@ import chalk from "chalk";
  * Logs the endpoints, status and   
  * 
  * @returns
- * BAD_TOKEN if the provided token is invalid for the API - Error 401
+ * BAD_TOKEN if the provided token is invalid - Error 401
  */
 
 export default async function updateReg(registrations, token) {
