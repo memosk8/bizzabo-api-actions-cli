@@ -1,36 +1,44 @@
 # [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
+<hr style="border: 3px solid black">
+
 ## Events 
 
- > GET https://api.bizzabo.com/api/events 
+ https://api.bizzabo.com/api/events 
+
+ > __GET__
 
  - List all account events
  - Get an specific event
 
-<hr style="border: 2px solid #2c8898">
+<hr style="border: 1px solid black">
 
-## Contacts
+## Contacts 
 
- > GET https://api.bizzabo.com/api/contacts
+ https://api.bizzabo.com/api/contacts
+
+ > __GET__ 
 
   + Get contact
   + List contacts
   + List contact lists
 
- > POST https://api.bizzabo.com/api/contacts
+ > __POST__
 
   + Bulk add contacts
   + Add contact
 
- > PUT https://api.bizzabo.com/api/contacts
+ > __PUT__
 
   + Update contact
   + Bulk update contacts
 
- > DELETE https://api.bizzabo.com/api/contacts
+ > __DELETE__
 
   + Delete contact
   + Bulk delete contacts
+
+<hr style="border: 1px solid black">
 
 ## Registrations
 
