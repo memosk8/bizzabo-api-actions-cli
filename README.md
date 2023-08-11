@@ -1,6 +1,6 @@
 # [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
-## | Events 
+## Events 
 
  > GET https://api.bizzabo.com/api/events 
 
