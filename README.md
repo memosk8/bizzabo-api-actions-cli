@@ -1,10 +1,9 @@
-# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg#bizzabo-api-actions-cli)
+# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
 ## Events
 
-### 1. List all account events
-
-### 2. Get an specific event
+#### 1. List all account events
+#### 2. Get an specific event
 
 ## Contacts
 
