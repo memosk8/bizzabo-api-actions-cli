@@ -8,19 +8,25 @@
 ## Contacts
 
 1. List contacts
-1. Add contact
-1. Bulk add contacts
-1. Get contact
-1. Get specific contacts
-1. Update contact
-1. Bulk update contacts
-1. Delete contact
-1. Bulk delete contacts
-1. List contact lists
+2. Add contact
+3. Bulk add contacts
+4. Get contact
+5. Get specific contacts
+6. Update contact
+7. Bulk update contacts
+8. Delete contact
+9. Bulk delete contacts
+10. List contact lists
 
 ## Registrations
 
 1. Transfer ticket
-1. Event check in
-1. Bulk transfer tickets
-1. Bulk event check-in
+2. Event check in
+3. Bulk transfer tickets
+4. Bulk event check-in
+5. Event check out
+6. Bulk event checkout
+7. Cancel ticket
+8. Bulk cancel ticket
+9. Add registration (Assign ticket)
+10. Bulk add registrations
