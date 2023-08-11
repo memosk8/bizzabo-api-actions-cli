@@ -1,9 +1,10 @@
-# Bizzabo API actions CLI
+# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
 ## Events
 
-1. List all account events
-2. Get an specific event
+### 1. List all account events
+
+### 2. Get an specific event
 
 ## Contacts
 
@@ -30,3 +31,12 @@
 8. Bulk cancel ticket
 9. Add registration (Assign ticket)
 10. Bulk add registrations
+11. Get registration
+12. List all registrations
+
+## Agenda
+
+1. Get agenda settings
+2. Update agenda settings
+3. Get session registration settings
+4. Get agenda registrations rules
