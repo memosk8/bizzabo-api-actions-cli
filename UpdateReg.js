@@ -44,7 +44,7 @@ export default async function updateReg(registrations, token) {
 
       'checkedIn': reg["Event Checked In"],
     }
-
+    
     try {
       const res = await fetch(url, options)
       if (res.status === 401) {
