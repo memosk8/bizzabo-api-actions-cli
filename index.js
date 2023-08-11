@@ -6,10 +6,10 @@ import chalk from "chalk"
 import sleep from "./sleep.js"
 
 const prompt = PromptSync({ sigint: true })
-let opt = ''
 
 /* main menu */
 
+  let opt = ''
 do {
   console.clear()
   console.log(chalk.green('1 - '), chalk.yellow("Bulk Update Registrations"))
@@ -34,6 +34,7 @@ do {
           registrations = readFile(path)
         } catch (error) {
           console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
+          console.error(error)
           await sleep(2000)
         }
       } while (!registrations);
