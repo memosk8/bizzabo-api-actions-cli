@@ -1,8 +1,8 @@
-# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
+# :yellow_heart: [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
-<hr style="border: 3px solid black">
+<hr style="border: 2px solid black">
 
-## Events 
+## :arrow_forward: Events 
 
  https://api.bizzabo.com/api/events 
 
@@ -13,7 +13,7 @@
 
 <hr style="border: 1px solid black">
 
-## Contacts 
+## :arrow_forward: Contacts 
 
  https://api.bizzabo.com/api/contacts
 
@@ -40,7 +40,7 @@
 
 <hr style="border: 1px solid black">
 
-## Registrations
+## :arrow_forward: Registrations
 
   01. Transfer ticket
   02. Event check in
@@ -55,7 +55,7 @@
   11. Get registration
   12. List all registrations
 
-## Agenda
+## :arrow_forward: Agenda
 
   01. Get agenda settings
   02. Update agenda settings
