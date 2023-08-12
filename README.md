@@ -1,63 +1,67 @@
-# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg) :boom:
+# [Bizzabo API actions CLI](https://github.com/memosk8/update-reg)
 
 <hr style="border: 2px solid black">
 
-## > Events 
+## [ Events ] 
 
- > https://api.bizzabo.com/api/events 
+ https://api.bizzabo.com/api/events 
 
  > __GET__
 
- - List all account events
- - Get an specific event
+ - [ ] List all account events
+ - [ ] Get an specific event
 
 <hr style="border: 1px solid black">
 
-## > Contacts 
+## [ Contacts ] 
 
- > https://api.bizzabo.com/api/contacts
+ https://api.bizzabo.com/api/contacts
 
  > __GET__ 
 
-  + Get contact
-  + List contacts
-  + List contact lists
+  - [ ] Get contact
+  - [ ] List contacts
+  - [ ] List contact lists
 
  > __POST__
 
-  + Bulk add contacts
-  + Add contact
+  - [X] Bulk add contacts
+  - [ ] Add contact
 
  > __PUT__
 
-  + Update contact
-  + Bulk update contacts
+  - [ ] Update contact
+  - [ ] Bulk update contacts
 
  > __DELETE__
 
-  + Delete contact
-  + Bulk delete contacts
+  - [ ] Delete contact
+  - [ ] Bulk delete contacts
 
 <hr style="border: 1px solid black">
 
-## > Registrations
+## [ Registrations ]
 
-  01. Transfer ticket
-  02. Event check in
-  03. Bulk transfer tickets
-  04. Bulk event check-in
-  05. Event check out
-  06. Bulk event checkout
-  07. Cancel ticket
-  08. Bulk cancel ticket
-  09. Add registration (Assign ticket)
-  10. Bulk add registrations
-  11. Get registration
-  12. List all registrations
+  - [ ] Transfer ticket
+  - [ ] Event check in
+  - [X] Bulk transfer tickets
+  - [ ] Bulk event check-in
+  - [ ] Event check out
+  - [ ] Bulk event checkout
+  - [ ] Cancel ticket
+  - [ ] Bulk cancel ticket
+  - [ ] Add registration (Assign ticket)
+  - [ ] Bulk add registrations
+  - [ ] Get registration
+  - [ ] List all registrations
 
-## > Agenda
+<hr style="border: 1px solid black">
 
-  01. Get agenda settings
-  02. Update agenda settings
-  03. Get session registration settings
-  04. Get agenda registrations rules
+## [ Agenda ]
+
+  - [ ] Get agenda settings
+  - [ ] Update agenda settings
+  - [ ] Get session registration settings
+  - [ ] Get agenda registrations rules
+
+<hr style="border: 1px solid black">
