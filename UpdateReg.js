@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import sleep from "./sleep.js"
+//import sleep from "./sleep.js"
 import chalk from "chalk";
 
 /**
@@ -14,6 +14,7 @@ import chalk from "chalk";
  * 
  * @returns
  * BAD_TOKEN if the provided token is invalid - Error 401
+ *  or true if ok
  */
 
 export default async function updateReg(registrations, token) {
@@ -64,4 +65,5 @@ export default async function updateReg(registrations, token) {
     /* to avoid the API call limit per second  */
     // await sleep(100)
   }
+  return true;
 }

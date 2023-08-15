@@ -44,6 +44,7 @@
 
   - [ ] Transfer ticket
   - [ ] Event check in
+  - [ ] Bulk export magic links
   - [X] Bulk transfer tickets
   - [ ] Bulk event check-in
   - [ ] Event check out
