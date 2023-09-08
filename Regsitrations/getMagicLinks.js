@@ -1,5 +1,6 @@
 import xlsx from "xlsx"
 import fetch from "node-fetch"
+import sleep from "sleep-promise";
 // import chalk from "chalk";
 
 /**
@@ -43,40 +44,40 @@ export default async function getMagicLinks(regs, token, path) {
       }
 
       const body = await res.json()
+
+      console.log(url,options, res)
+      await sleep(1000)
+
       magicLinks.push({
         'First name': body[properties].firstName,
-        'Last name': body.properties.lastName,
-        'Email': body.properties.email,
+        'Last name': body[properties].lastName,
+        'Email': body[properties].email,
         'Ticket number': body.id,
         'Magic link': body.magicLink
       })
 
+      
       /* 
-      console.log(
-        chalk.green.bold(res.status),
-        chalk.cyan(res.url),
-        chalk.greenBright(body.modified.split('T')[0]) + chalk.red('T') + chalk.yellow(body.modified.split('T')[1]),
-        chalk.red(body.magicLink)
-      )
-       */
-
-      /* 
-        https://plainenglish.io/blog/read-write-excel-file-in-node-js-using-xlsx#this-post-contains-two-parts
+      https://plainenglish.io/blog/read-write-excel-file-in-node-js-using-xlsx#this-post-contains-two-parts
       */
-
+     
     }
     catch (error) {
       console.error(error)
     }
-
+    
     /* to avoid the API call limit per second  */
     // await sleep(100)
   }
+  
+  console.log(magicLinks)
 
+/*   
   const ws = xlsx.utils.json_to_sheet(magicLinks)
-  const wb = xlsx.utils.book_new()
+  const wb = xlsx.utils.book_new("magic")
   xlsx.utils.book_append_sheet(wb, ws, 'Magic links')
-  xlsx.writeFile(wb, path)
+  xlsx.writeFile(wb, path) 
+*/
 
   return true;
 
