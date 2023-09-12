@@ -45,7 +45,7 @@ export default async function getMagicLinks(regs, token, path) {
 
       const body = await res.json()
 
-      console.log(url,options, res)
+      console.log(url, options, res)
       await sleep(1000)
 
       magicLinks.push({
@@ -56,28 +56,23 @@ export default async function getMagicLinks(regs, token, path) {
         'Magic link': body.magicLink
       })
 
-      
-      /* 
-      https://plainenglish.io/blog/read-write-excel-file-in-node-js-using-xlsx#this-post-contains-two-parts
-      */
-     
     }
     catch (error) {
       console.error(error)
     }
-    
+
     /* to avoid the API call limit per second  */
     // await sleep(100)
   }
-  
+
   console.log(magicLinks)
 
-/*   
-  const ws = xlsx.utils.json_to_sheet(magicLinks)
-  const wb = xlsx.utils.book_new("magic")
-  xlsx.utils.book_append_sheet(wb, ws, 'Magic links')
-  xlsx.writeFile(wb, path) 
-*/
+  /*   
+    const ws = xlsx.utils.json_to_sheet(magicLinks)
+    const wb = xlsx.utils.book_new("magic")
+    xlsx.utils.book_append_sheet(wb, ws, 'Magic links')
+    xlsx.writeFile(wb, path) 
+  */
 
   return true;
 
