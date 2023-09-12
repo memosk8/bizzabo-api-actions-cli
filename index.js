@@ -1,5 +1,5 @@
 import readFile from "./readFile.js"
-import BulkUpdateCheckin from './BulkEventCheckin.js'
+import BulkUpdateCheckin from './Regsitrations/BulkEventCheckin.js'
 import uploadContacts from './UploadContacts.js'
 import getMagicLinks from "./Regsitrations/GetMagicLinks.js"
 import PromptSync from 'prompt-sync'
@@ -28,43 +28,8 @@ do {
       console.log(chalk.redBright("\nExiting...\n"))
       process.exit(1)
 
-    case '1':
-      do {
-        console.clear()
-        console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
-        var registrations
-        var path = prompt(chalk.green('File path: '))
-        try {
-          registrations = readFile(path)
-        } catch (error) {
-          console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
-          await sleep(2000)
-        }
-      } while (!registrations);
+    case '1': bulkEventCheckinMenu()
 
-      var isUpdated
-      do {
-        console.clear()
-        console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
-        console.log('File path: ' + path)
-        var tk = prompt(chalk.green('API token: '))
-        console.log()
-        isUpdated = await BulkUpdateCheckin(registrations, tk)
-        if (isUpdated === 'BAD_TOKEN') {
-          console.error(chalk.bgBlack.red.bold('\nInvalid token'))
-        }
-        await sleep(1000)
-      } while (isUpdated === 'BAD_TOKEN')
-
-      await sleep(300)
-      console.log(chalk.green('\n======================================'))
-      console.log(
-        chalk.green('|'),
-        chalk.rgb(250, 100, 5).bold('Bulk Update Registrations complete'),
-        chalk.green('|')
-      )
-      console.log(chalk.green('======================================\n'))
-      process.exit(1)
 
     case '2':
       var path = prompt('File path: ')
@@ -151,7 +116,6 @@ do {
       )
       console.log(chalk.green('======================================\n'))
       process.exit(1)
-      BulkCancelTickets();
 
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
@@ -162,3 +126,44 @@ do {
 
 } while (opt != '0');
 
+/* Functions menus */
+
+async function bulkEventCheckinMenu() {
+  do {
+    console.clear()
+    console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
+    var registrations
+    var path = prompt(chalk.green('File path: '))
+    try {
+      registrations = readFile(path)
+    } catch (error) {
+      console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
+      await sleep(1700)
+      console.clear()
+    }
+  } while (!registrations);
+
+  var isUpdated
+  do {
+    console.clear()
+    console.log(chalk.yellow.bold('\nBulk Update Registration\n'))
+    console.log('File path: ' + path)
+    var tk = prompt(chalk.green('API token: '))
+    console.log()
+    isUpdated = await BulkUpdateCheckin(registrations, tk)
+    if (isUpdated === 'BAD_TOKEN') {
+      console.error(chalk.bgBlack.red.bold('\nInvalid token'))
+    }
+    await sleep(1000)
+  } while (isUpdated === 'BAD_TOKEN')
+
+  await sleep(300)
+  console.log(chalk.green('\n======================================'))
+  console.log(
+    chalk.green('|'),
+    chalk.rgb(250, 100, 5).bold('Bulk Update Registrations complete'),
+    chalk.green('|')
+  )
+  console.log(chalk.green('======================================\n'))
+  process.exit(1)
+}
