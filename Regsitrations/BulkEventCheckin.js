@@ -25,11 +25,11 @@ export default async function BulkEventCheckin(registrations, token) {
   for (let i = 0; i < registrations.length; i++) {
 
     const reg = registrations[i];
-    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}`
+    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}?checkTicketRules=false`
 
     const options = {
 
-      'method': 'GET',
+      'method': 'PUT',
       'headers': {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/vnd.bizzabo.v2.0+json',
@@ -46,7 +46,7 @@ export default async function BulkEventCheckin(registrations, token) {
           'email': reg['Email Address'],
         },
 
-        'checkedIn': 'true',
+        'checkedin': true,
       }),
     }
 
@@ -66,9 +66,6 @@ export default async function BulkEventCheckin(registrations, token) {
     catch (error) {
       console.error(error)
     }
-
-    /* to avoid the API call limit per second  */
-    // await sleep(100)
   }
   return true;
 }
