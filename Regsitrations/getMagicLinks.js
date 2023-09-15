@@ -2,7 +2,7 @@ import xlsx from "xlsx"
 import fetch from "node-fetch"
 import sleep from "sleep-promise";
 // import chalk from "chalk";
-
+  
 /**
  * 
  * @description
@@ -19,14 +19,13 @@ import sleep from "sleep-promise";
  *  or true if ok
  */
 
-export default async function getMagicLinks(regs, token, path) {
+export default async function GetMagicLinks(token, filePath, eventId) {
 
   let magicLinks = []
 
   for (let i = 0; i < regs.length; i++) {
 
-    const reg = regs[i];
-    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}`
+    const url = `https://api.bizzabo.com/api/registrations/?eventId=${eventId}`
     const options = {
       'method': 'GET',
       'headers': {
@@ -39,14 +38,10 @@ export default async function getMagicLinks(regs, token, path) {
     try {
       const res = await fetch(url, options)
 
-      if (res.status === 401) {
-        return 'BAD_TOKEN'
-      }
+      if (res.status === 401) return { error: 'BAD_TOKEN', message: "Please check your API token" }
+      if (res.status === 400) return { error: "NOT_FOUND", message: "Please check the #event ID " }
 
       const body = await res.json()
-
-      console.log(url, options, res)
-      await sleep(1000)
 
       magicLinks.push({
         'First name': body[properties].firstName,
@@ -55,24 +50,18 @@ export default async function getMagicLinks(regs, token, path) {
         'Ticket number': body.id,
         'Magic link': body.magicLink
       })
-
     }
     catch (error) {
       console.error(error)
     }
-
-    /* to avoid the API call limit per second  */
-    // await sleep(100)
   }
 
   console.log(magicLinks)
 
-  /*   
-    const ws = xlsx.utils.json_to_sheet(magicLinks)
-    const wb = xlsx.utils.book_new("magic")
-    xlsx.utils.book_append_sheet(wb, ws, 'Magic links')
-    xlsx.writeFile(wb, path) 
-  */
+  const ws = xlsx.utils.json_to_sheet(magicLinks)
+  const wb = xlsx.utils.book_new("magic")
+  xlsx.utils.book_append_sheet(wb, ws, 'Magic links')
+  xlsx.writeFile(wb, filePath)
 
   return true;
 

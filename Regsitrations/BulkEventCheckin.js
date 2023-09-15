@@ -26,9 +26,8 @@ export default async function BulkEventCheckin(registrations, token) {
 
     const reg = registrations[i];
     const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}?checkTicketRules=false`
-
+    
     const options = {
-
       'method': 'PUT',
       'headers': {
         'Authorization': `Bearer ${token}`,
@@ -45,7 +44,6 @@ export default async function BulkEventCheckin(registrations, token) {
           'lastName': reg['Last Name'],
           'email': reg['Email Address'],
         },
-
         'checkedin': true,
       }),
     }

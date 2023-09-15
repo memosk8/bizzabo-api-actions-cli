@@ -1,12 +1,12 @@
 import readFile from "./readFile.js"
 import BulkEventCheckin from './Regsitrations/BulkEventCheckin.js'
 import uploadContacts from './UploadContacts.js'
-import getMagicLinks from "./Regsitrations/GetMagicLinks.js"
 import PromptSync from 'prompt-sync'
 import chalk from "chalk"
 import sleep from "./sleep.js"
 import BulkCancelTickets from "./Regsitrations/BulkCancelTickets.js"
 import BulkAddRegistrations from "./Regsitrations/BulkAddRegistration.js"
+import GetMagicLinks from "./Regsitrations/getMagicLinks.js"
 
 const prompt = PromptSync({ sigint: true })
 
@@ -89,7 +89,7 @@ do {
           registrations = readFile(path)
         } catch (error) {
           console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
-          await sleep(1700)
+          await sleep(1200)
         }
       } while (!registrations);
 
@@ -100,12 +100,12 @@ do {
         console.log('File path: ' + path)
         var tk = prompt(chalk.green('API token: '))
         console.log()
-        isUpdated = await getMagicLinks(registrations, tk, path)
-        if (isUpdated === 'BAD_TOKEN') {
-          console.error(chalk.bgBlack.red.bold('\nInvalid token'))
+        isUpdated = await GetMagicLinks(registrations, tk, path)
+        if (isUpdated.error) {
+          console.error(chalk.bgBlack.red.bold(`\n${isUpdated.message}`))
         }
         await sleep(1000)
-      } while (isUpdated === 'BAD_TOKEN')
+      } while (isUpdated === 'BAD_TOKEN' || isUpdated)
 
       await sleep(300)
       console.log(chalk.green('\n======================================'))
