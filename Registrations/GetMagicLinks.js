@@ -31,17 +31,17 @@ export default async function GetMagicLinks(token, eventId) {
   try {
     const res = await fetch(url, options)
 
-    if (res.status === 400) return { 
+    if (res.status === 404) return { 
       status: false, 
       error: "NOT_FOUND", 
-      message: "Please check the #event ID " 
+      message: "Please check the event # ID " 
     }
     else if (res.status === 401) return { 
       status: false, 
       error: 'BAD_TOKEN', 
       message: "Please check your API token" 
     }
-    else {
+    else if(res.status === 200){
       let magicLinks = []
       const body = await res.json()
 
@@ -52,6 +52,7 @@ export default async function GetMagicLinks(token, eventId) {
           'First Name': registration.properties.firstName,
           'Last Name': registration.properties.lastName,
           'Email': registration.properties.email,
+          'Valitidy': registration.validity,
           'Ticket Number': registration.id,
           'Ticket Name': registration.ticketName,
           'Magic Link': registration.magicLink
