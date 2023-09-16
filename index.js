@@ -89,7 +89,6 @@ do {
 
     case '3':
       var magicLinks
-      var eventIdlenght = true
       do {
         console.clear()
         console.log(chalk.yellow.bold('\nGet magic links\n'))
