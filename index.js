@@ -1,12 +1,14 @@
 import readFile from "./readFile.js"
-import BulkEventCheckin from './Regsitrations/BulkEventCheckin.js'
+import BulkEventCheckin from './Registrations/BulkEventCheckin.js'
 import uploadContacts from './UploadContacts.js'
 import PromptSync from 'prompt-sync'
 import chalk from "chalk"
 import sleep from "./sleep.js"
-import BulkCancelTickets from "./Regsitrations/BulkCancelTickets.js"
-import BulkAddRegistrations from "./Regsitrations/BulkAddRegistration.js"
-import GetMagicLinks from "./Regsitrations/getMagicLinks.js"
+import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
+import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
+import GetMagicLinks from "./Registrations/GetMagicLinks.js"
+import xlsx from "xlsx"
+import fs from "fs"
 
 const prompt = PromptSync({ sigint: true })
 
@@ -30,6 +32,8 @@ do {
     case '0':
       console.log(chalk.redBright("\nExiting...\n"))
       process.exit(1)
+
+    /* ------------------------------------------------------- */
 
     case '1':
       do {
@@ -70,6 +74,8 @@ do {
       console.log(chalk.green('======================================\n'))
       process.exit(1)
 
+    /* ------------------------------------------------------- */
+
     case '2':
       var path = prompt('File path: ')
       var tk = prompt('API token: ')
@@ -79,43 +85,43 @@ do {
       console.log('\n==============\n Bulk Upload Contacts complete \n==============\n')
       process.exit(1)
 
+    /* ------------------------------------------------------- */
+
     case '3':
+      var magicLinks
+      var eventIdlenght = true
       do {
         console.clear()
         console.log(chalk.yellow.bold('\nGet magic links\n'))
-        var registrations
-        var path = prompt(chalk.green('File path: '))
-        try {
-          registrations = readFile(path)
-        } catch (error) {
-          console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
-          await sleep(1200)
-        }
-      } while (!registrations);
-
-      var isUpdated
-      do {
-        console.clear()
-        console.log(chalk.yellow.bold('\nGet magic links\n'))
-        console.log('File path: ' + path)
+        var eventId = prompt(chalk.green('Event ID: '))
         var tk = prompt(chalk.green('API token: '))
-        console.log()
-        isUpdated = await GetMagicLinks(registrations, tk, path)
-        if (isUpdated.error) {
-          console.error(chalk.bgBlack.red.bold(`\n${isUpdated.message}`))
+        magicLinks = await GetMagicLinks(tk, eventId)
+        if (magicLinks.hasOwnProperty('error')) {
+          console.error(chalk.bgBlack.red.bold(`\n${magicLinks.message}`))
         }
-        await sleep(1000)
-      } while (isUpdated === 'BAD_TOKEN' || isUpdated)
+        await sleep(2000)
+      } while (magicLinks.error === 'BAD_TOKEN' || magicLinks.error === 'NOT_FOUND' )
 
-      await sleep(300)
-      console.log(chalk.green('\n======================================'))
+      //create folder for generated spreadsheets
+      const folderName = `${process.cwd()}/Spreadsheets`
+      try {
+        if (!fs.existsSync(folderName)) fs.mkdirSync(folderName)
+      } catch (err) { console.error(err) }
+
+      // write registrations to spreadsheet
+      let workbook = xlsx.utils.book_new()
+      const worksheet = xlsx.utils.json_to_sheet(magicLinks)
+      xlsx.utils.book_append_sheet(workbook, worksheet, "magic links")
+      xlsx.writeFile(workbook, `${process.cwd()}/Spreadsheets/Magic_Links.xlsx`)
+
+      console.log(chalk.green('================================='))
       console.log(
-        chalk.green('|'),
-        chalk.rgb(250, 100, 5).bold('Magic links saved on spreadsheet'),
-        chalk.green('|')
-      )
-      console.log(chalk.green('======================================\n'))
+        chalk.rgb(250, 100, 5).bold('Magic links saved to spreadsheet:'),
+        chalk.underline.greenBright(`${process.cwd()}/Spreadsheets/Magic_Links.xlsx`))
+      console.log(chalk.green('=================================\n'))
       process.exit(1)
+
+    /* ------------------------------------------------------- */
 
     case '4':
       do {
@@ -156,6 +162,8 @@ do {
       console.log(chalk.green('======================================\n'))
       process.exit(1)
 
+    /* ------------------------------------------------------- */
+
     case '5':
       do {
         console.clear()
@@ -195,6 +203,8 @@ do {
       )
       console.log(chalk.green('======================================\n'))
       process.exit(1)
+
+    /* ------------------------------------------------------- */
 
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
