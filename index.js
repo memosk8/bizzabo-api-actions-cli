@@ -97,8 +97,9 @@ do {
         magicLinks = await GetMagicLinks(tk, eventId)
         if (magicLinks.hasOwnProperty('error')) {
           console.error(chalk.bgBlack.red.bold(`\n${magicLinks.message}`))
+          await sleep(1200)
         }
-        await sleep(2000)
+        else continue
       } while (magicLinks.error === 'BAD_TOKEN' || magicLinks.error === 'NOT_FOUND' )
 
       //create folder for generated spreadsheets

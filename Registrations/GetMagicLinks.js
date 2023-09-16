@@ -31,7 +31,7 @@ export default async function GetMagicLinks(token, eventId) {
   try {
     const res = await fetch(url, options)
 
-    if (eventId.length < 6 || res.status === 404) return { 
+    if (res.status === 404) return { 
       status: false, 
       error: "NOT_FOUND", 
       message: "Please check the event # ID " 
