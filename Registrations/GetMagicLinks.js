@@ -18,7 +18,7 @@ import fetch from "node-fetch"
 
 export default async function GetMagicLinks(token, eventId) {
 
-  const url = `https://api.bizzabo.com/api/registrations?eventId=${eventId}`
+  const url = `https://api.bizzabo.com/api/registrations?eventId=${eventId.trim()}`
   const options = {
     'method': 'GET',
     'headers': {

@@ -22,7 +22,7 @@ export default async function ListRegTypes(token, eventId) {
 
 // https://api.bizzabo.com/api/registrationTypes?eventId=461236
 
-  const url = `https://api.bizzabo.com/api/registrationTypes?eventId=${eventId}`
+  const url = `https://api.bizzabo.com/api/registrationTypes?eventId=${eventId.trim()}`
   const options = {
     'method': 'GET',
     'headers': {

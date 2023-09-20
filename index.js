@@ -225,7 +225,7 @@ do {
       xlsx.writeFile(wb, `${process.cwd()}/Ticket_types.xlsx`)
 
       console.log(chalk.green('================================='))
-      console.log(regTypes)
+      console.log(regTypes.types)
       console.log(chalk.green('=================================\n'))
       process.exit(1)
 

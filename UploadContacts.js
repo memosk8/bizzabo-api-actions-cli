@@ -1,5 +1,4 @@
 import fetch from "node-fetch"
-import sleep from "./sleep.js";
 
 export default async function uploadContacts(contacts, token, eventID) {
 
@@ -38,8 +37,5 @@ export default async function uploadContacts(contacts, token, eventID) {
     catch (error) {
       console.error(error)
     }
-    
-    /* to avoid the API call limit per second  */
-    // await sleep(100)
   }
 }
