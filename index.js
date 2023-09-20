@@ -7,6 +7,7 @@ import sleep from "./sleep.js"
 import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
 import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
+import ListRegTypes from "./Registrations/ListRegTypes.js"
 import xlsx from "xlsx"
 import fs from "fs"
 
@@ -22,6 +23,7 @@ do {
   console.log(chalk.green('3 - '), chalk.yellow("Get magic links"))
   console.log(chalk.green('4 - '), chalk.yellow("Bulk Cancel Tickets"))
   console.log(chalk.green('5 - '), chalk.yellow("Bulk Add Registrations"))
+  console.log(chalk.green('6 - '), chalk.yellow("List event registration types"))
 
   console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
@@ -100,10 +102,10 @@ do {
           await sleep(1200)
         }
         else continue
-      } while (magicLinks.error === 'BAD_TOKEN' || magicLinks.error === 'NOT_FOUND' )
+      } while (magicLinks.error === 'BAD_TOKEN' || magicLinks.error === 'NOT_FOUND')
 
       //create folder for generated spreadsheets
-      const folderName = `${process.cwd()}/Spreadsheets`
+      var folderName = `${process.cwd()}/Spreadsheets`
       try {
         if (!fs.existsSync(folderName)) fs.mkdirSync(folderName)
       } catch (err) { console.error(err) }
@@ -206,6 +208,29 @@ do {
 
     /* ------------------------------------------------------- */
 
+    case '6':
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nList Event Ticket Types\n'))
+        var eventId = prompt(chalk.green('Event ID: '))
+        var tk = prompt(chalk.green('API token: '))
+        var regTypes = await ListRegTypes(tk, eventId)
+        if (regTypes.status == false) { console.error(regTypes.message) }
+        await sleep(1500)
+      } while (regTypes.status == false)
+
+      var wb = xlsx.utils.book_new()
+      var ws = xlsx.utils.json_to_sheet(regTypes.types)
+      xlsx.utils.book_append_sheet(wb, ws, "Ticket Types")
+      xlsx.writeFile(wb, `${process.cwd()}/Ticket_types.xlsx`)
+
+      console.log(chalk.green('================================='))
+      console.log(regTypes)
+      console.log(chalk.green('=================================\n'))
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
       await sleep(2000)
@@ -216,7 +241,3 @@ do {
 } while (opt != '0');
 
 /* Functions menus */
-
-async function bulkEventCheckinMenu() {
-
-}
