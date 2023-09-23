@@ -53,6 +53,9 @@ export default async function BulkEventCheckin(registrations, token) {
       if (res.status === 401) {
         return 'BAD_TOKEN'
       }
+      if (res.status === 404) {
+        return 'BAD_REQUEST'
+      }
       const body = await res.json()
       console.log(i, chalk.green.bold(res.status), chalk.cyan(res.url),
         chalk.greenBright(body.modified.split('T')[0]) +

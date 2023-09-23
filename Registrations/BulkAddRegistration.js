@@ -1,5 +1,4 @@
 import fetch from "node-fetch"
-//import sleep from "./sleep.js"
 import chalk from "chalk";
 
 /**
@@ -24,19 +23,15 @@ export default async function BulkAddRegistrations(registrations, token, eventId
   for (let i = 0; i < registrations.length; i++) {
 
     const reg = registrations[i];
-    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}?eventId= ${eventId}`
+    const url = `https://api.bizzabo.com/api/registrations/${reg["Ticket Number"]}?eventId=${eventId}`
 
     const options = {
-
-      'method': 'GET',
+      'method': 'POST',
       'headers': {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/vnd.bizzabo.v2.0+json',
         'Accept': 'application/json'
       },
-
-      /*  body has to be stringified, if not 
-          the api will return an internal error 500  */
 
       'body': JSON.stringify({
         'properties': {
@@ -54,17 +49,23 @@ export default async function BulkAddRegistrations(registrations, token, eventId
       if (res.status === 401) {
         return 'BAD_TOKEN'
       }
-      const body = await res.json()
-      console.log(i, chalk.green.bold(res.status), chalk.cyan(res.url),
-        chalk.greenBright(body.modified.split('T')[0]) +
-        chalk.red('T') +
-        chalk.yellow(body.modified.split('T')[1])
-      )
-      console.log(body.checkedin)
+      else if (res.status === 404) {
+        return 'NOT_FOUND'
+      }
+      else if (res.status === 200) {
+        const body = await res.json()
+        console.log(i, chalk.green.bold(res.status), chalk.cyan(res.url),
+          chalk.greenBright(body.modified.split('T')[0]) +
+          chalk.red('T') +
+          chalk.yellow(body.modified.split('T')[1])
+        )
+        console.log(body.checkedin)
+      }
+      else return false
     }
     catch (error) {
       console.error(error)
     }
   }
-  return true;
+  return true
 }
