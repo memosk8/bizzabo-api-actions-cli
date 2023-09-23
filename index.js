@@ -1,13 +1,14 @@
-import readFile from "./readFile.js"
+import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
+import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
 import BulkEventCheckin from './Registrations/BulkEventCheckin.js'
+import GetTicketHolders from "./Registrations/GetTicketHolders.js"
+import GetMagicLinks from "./Registrations/GetMagicLinks.js"
+import ListRegTypes from "./Registrations/ListRegTypes.js"
 import uploadContacts from './UploadContacts.js'
+import readFile from "./readFile.js"
 import PromptSync from 'prompt-sync'
 import chalk from "chalk"
 import sleep from "./sleep.js"
-import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
-import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
-import GetMagicLinks from "./Registrations/GetMagicLinks.js"
-import ListRegTypes from "./Registrations/ListRegTypes.js"
 import xlsx from "xlsx"
 import fs from "fs"
 
@@ -24,7 +25,7 @@ do {
   console.log(chalk.green('4 - '), chalk.yellow("Bulk Cancel Tickets"))
   console.log(chalk.green('5 - '), chalk.yellow("Bulk Add Registrations"))
   console.log(chalk.green('6 - '), chalk.yellow("List event registration types"))
-
+  console.log(chalk.green('7 - '), chalk.yellow("Get all active ticket holders"))
   console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
   opt = prompt(chalk.greenBright('Select an option: '))
@@ -111,8 +112,8 @@ do {
       } catch (err) { console.error(err) }
 
       // write registrations to spreadsheet
-      let workbook = xlsx.utils.book_new()
-      const worksheet = xlsx.utils.json_to_sheet(magicLinks)
+      var workbook = xlsx.utils.book_new()
+      var worksheet = xlsx.utils.json_to_sheet(magicLinks)
       xlsx.utils.book_append_sheet(workbook, worksheet, "magic links")
       xlsx.writeFile(workbook, `${process.cwd()}/Spreadsheets/Magic_Links.xlsx`)
 
@@ -172,6 +173,9 @@ do {
         console.log(chalk.yellow.bold('\nBulk Add Registrations\n'))
         var registrations
         var path = prompt(chalk.green('File path: '))
+        var eventId = prompt(chalk.green('Event ID: '))
+        var tk = prompt(chalk.green('API token: '))
+        var ticketId = prompt(chalk.green('Ticket type ID: #'))
         try {
           registrations = readFile(path)
         } catch (error) {
@@ -185,16 +189,16 @@ do {
         console.clear()
         console.log(chalk.yellow.bold('\nBulk Add Registrations\n'))
         console.log('File path: ' + path)
-        var eventId = prompt(chalk.green('Event ID: '))
-        var tk = prompt(chalk.green('API token: '))
-        var ticketId = prompt(chalk.green('Ticket type ID: #'))
         console.log()
         isUpdated = await BulkAddRegistrations(registrations, tk, eventId, ticketId)
         if (isUpdated === 'BAD_TOKEN') {
           console.error(chalk.bgBlack.red.bold('\nInvalid token'))
         }
+        if (isUpdated === 'NOT_FOUND') {
+          console.error(chalk.bgBlack.red.bold('\nCheck your event ID or ticket ID'))
+        }
         await sleep(1000)
-      } while (isUpdated === 'BAD_TOKEN')
+      } while (isUpdated === 'BAD_TOKEN' || isUpdated === 'NOT_FOUND' || isUpdated == false)
 
       await sleep(300)
       console.log(chalk.green('\n======================================'))
@@ -222,7 +226,7 @@ do {
       var wb = xlsx.utils.book_new()
       var ws = xlsx.utils.json_to_sheet(regTypes.types)
       xlsx.utils.book_append_sheet(wb, ws, "Ticket Types")
-      xlsx.writeFile(wb, `${process.cwd()}/Ticket_types.xlsx`)
+      xlsx.writeFile(wb, `Ticket_types.xlsx`)
 
       console.log(chalk.green('================================='))
       console.log(regTypes.types)
@@ -230,6 +234,34 @@ do {
       process.exit(1)
 
     /* ------------------------------------------------------- */
+
+    case '7':
+      var ticketHolders
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nGet magic links\n'))
+        var eventId = prompt(chalk.green('Event ID: '))
+        var tk = prompt(chalk.green('API token: '))
+        ticketHolders = await GetTicketHolders(tk, eventId)
+        if (ticketHolders.hasOwnProperty('error')) {
+          console.error(chalk.bgBlack.red.bold(`\n${ticketHolders.message}`))
+          await sleep(1200)
+        }
+        else continue
+      } while (ticketHolders.error === 'BAD_TOKEN' || ticketHolders.error === 'NOT_FOUND')
+
+      // write registrations to spreadsheet
+      var workbook = xlsx.utils.book_new()
+      var worksheet = xlsx.utils.json_to_sheet(ticketHolders)
+      xlsx.utils.book_append_sheet(workbook, worksheet, "magic links")
+      xlsx.writeFile(workbook, `Ticket_holders.xlsx`)
+
+      console.log(chalk.green('================================='))
+      console.log(
+        chalk.rgb(250, 100, 5).bold('Ticket holders saved to spreadsheet:'),
+        chalk.underline.greenBright(`${process.cwd()}/Magic_Links.xlsx`))
+      console.log(chalk.green('=================================\n'))
+      process.exit(1)
 
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
@@ -240,4 +272,3 @@ do {
 
 } while (opt != '0');
 
-/* Functions menus */
