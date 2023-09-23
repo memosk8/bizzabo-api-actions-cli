@@ -5,6 +5,7 @@ import GetTicketHolders from "./Registrations/GetTicketHolders.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
 import ListRegTypes from "./Registrations/ListRegTypes.js"
 import uploadContacts from './UploadContacts.js'
+import GetAllEvents from "./Events/GetAllEvents.js"
 import readFile from "./readFile.js"
 import PromptSync from 'prompt-sync'
 import chalk from "chalk"
@@ -26,6 +27,7 @@ do {
   console.log(chalk.green('5 - '), chalk.yellow("Bulk Add Registrations"))
   console.log(chalk.green('6 - '), chalk.yellow("List event registration types"))
   console.log(chalk.green('7 - '), chalk.yellow("Get all active ticket holders"))
+  console.log(chalk.green('8 - '), chalk.yellow("Get all account events"))
   console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
   opt = prompt(chalk.greenBright('Select an option: '))
@@ -262,6 +264,31 @@ do {
         chalk.underline.greenBright(`${process.cwd()}/Magic_Links.xlsx`))
       console.log(chalk.green('=================================\n'))
       process.exit(1)
+
+    case '8':
+      var events
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nGet all account events!\n'))
+        var tk = prompt(chalk.green('API token: '))
+        console.log()
+        events = await GetAllEvents(tk)
+        if (events === 'BAD_TOKEN') {
+          console.error(chalk.bgBlack.red.bold('\nInvalid token'))
+        }
+        await sleep(1000)
+      } while (events === 'BAD_TOKEN')
+
+      // write registrations to spreadsheet
+      var workbook = xlsx.utils.book_new()
+      var worksheet = xlsx.utils.json_to_sheet(events.events)
+      xlsx.utils.book_append_sheet(workbook, worksheet, "All Events")
+      xlsx.writeFile(workbook, `${process.cwd()}/All_Events.xlsx`)
+
+      await sleep(300)
+      console.log(events)
+      process.exit(1)
+
 
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
