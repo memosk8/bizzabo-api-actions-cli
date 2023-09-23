@@ -8,7 +8,7 @@
 
  > __GET__
 
- - [ ] List all account events
+ - [X] List all account events
  - [ ] Get an specific event
 
 <hr style="border: 1px solid black">
@@ -44,17 +44,15 @@
 
   - [ ] Transfer ticket
   - [ ] Event check in
-  - [ ] Bulk export magic links
+  - [X] Bulk export magic links
   - [X] Bulk transfer tickets
-  - [ ] Bulk event check-in
+  - [X] Bulk event check-in
   - [ ] Event check out
   - [ ] Bulk event checkout
-  - [ ] Cancel ticket
-  - [ ] Bulk cancel ticket
-  - [ ] Add registration (Assign ticket)
-  - [ ] Bulk add registrations
-  - [ ] Get registration
-  - [ ] List all registrations
+  - [X] Bulk cancel ticket
+  - [X] Bulk add registrations
+  - [X] List all registrations (Ticket holders)
+  - [X] List all registration types (Ticket types)
 
 <hr style="border: 1px solid black">
 
