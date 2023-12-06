@@ -52,9 +52,8 @@ export default async function GetMagicLinks(token, eventId) {
           'First Name': registration.properties.firstName,
           'Last Name': registration.properties.lastName,
           'Email': registration.properties.email,
-          'Valitidy': registration.validity,
-          'Ticket Number': registration.id,
           'Ticket Name': registration.ticketName,
+          'Ticket Number': registration.id,
           'Magic Link': registration.magicLink
         })
       }
@@ -65,3 +64,5 @@ export default async function GetMagicLinks(token, eventId) {
     console.error(error)
   }
 }
+
+/* @TODO:  loop pagination */

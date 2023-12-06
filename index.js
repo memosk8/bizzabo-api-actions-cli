@@ -2,14 +2,15 @@ import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
 import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
 import BulkEventCheckin from './Registrations/BulkEventCheckin.js'
 import GetTicketHolders from "./Registrations/GetTicketHolders.js"
+import BulkSessionCheckin from "./Sessions/BulkSessionCheckin.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
 import ListRegTypes from "./Registrations/ListRegTypes.js"
-import uploadContacts from './UploadContacts.js'
 import GetAllEvents from "./Events/GetAllEvents.js"
-import readFile from "./readFile.js"
+import uploadContacts from './UploadContacts.js'
 import PromptSync from 'prompt-sync'
-import chalk from "chalk"
+import readFile from "./readFile.js"
 import sleep from "./sleep.js"
+import chalk from "chalk"
 import xlsx from "xlsx"
 import fs from "fs"
 
@@ -28,6 +29,7 @@ do {
   console.log(chalk.green('6 - '), chalk.yellow("List event registration types"))
   console.log(chalk.green('7 - '), chalk.yellow("Get all active ticket holders"))
   console.log(chalk.green('8 - '), chalk.yellow("Get all account events"))
+  console.log(chalk.green('9 - '), chalk.yellow("Bulk session checkin"))
   console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
   opt = prompt(chalk.greenBright('Select an option: '))
@@ -265,6 +267,8 @@ do {
       console.log(chalk.green('=================================\n'))
       process.exit(1)
 
+    /* ------------------------------------------------------- */      
+
     case '8':
       var events
       do {
@@ -289,6 +293,50 @@ do {
       console.log(events)
       process.exit(1)
 
+    /* ------------------------------------------------------- */      
+
+    case '9':
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nBulk Session Checkin\n'))
+        var registrations
+        var path = prompt(chalk.green('File path: '))
+        try {
+          registrations = readFile(path)
+        } catch (error) {
+          console.error(chalk.bgBlack.red.bold('\n Could not find the file, please check the path', '\n'))
+          await sleep(1700)
+          console.clear()
+        }
+      } while (!registrations);
+
+      var isUpdated
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nBulk Session Checkin\n'))
+        console.log('File path: ' + path)
+        var tk = prompt(chalk.green('API token: '))
+        var eventID = prompt(chalk.green('Event ID: '))
+        var sessionID = prompt(chalk.green('Session ID: '))
+        console.log()
+        isUpdated = await BulkSessionCheckin(registrations, tk, eventID, sessionID)
+        if (isUpdated === 'BAD_TOKEN') {
+          console.error(chalk.bgBlack.red.bold('\nInvalid token'))
+        }
+        await sleep(1000)
+      } while (isUpdated === 'BAD_TOKEN' || isUpdated === 'BAD_REQUEST' || isUpdated === 'NOT_FOUND')
+
+      await sleep(300)
+      console.log(chalk.green('\n======================================'))
+      console.log(
+        chalk.green('|'),
+        chalk.rgb(250, 100, 5).bold('Bulk Event Checkin complete'),
+        chalk.green('|')
+      )
+      console.log(chalk.green('======================================\n'))
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
 
     default:
       console.log('\n', chalk.bgRed.black("invalid option"))
