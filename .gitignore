@@ -1,5 +1,6 @@
 node_modules
 .env
+.xlsx
 .DS_Store
 Spreadsheets/
 Spreadsheets/.DS_Store
