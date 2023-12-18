@@ -1,10 +1,13 @@
 import { AuthenticationBuilder } from 'bizzabo-api';
 
-const 
-  CLIENT_ID = '',
-  CLIENT_SECRET = '',
-  ACCOUNT_ID = '',
-  auth = new AuthenticationBuilder(CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID).build(),
-  token = await auth.getClientCredentialsToken();
+export default async function getAuth(id, secret, acc) {
 
-export default token;
+  const
+    CLIENT_ID = id,
+    CLIENT_SECRET = secret,
+    ACCOUNT_ID = acc,
+    auth = new AuthenticationBuilder(CLIENT_ID, CLIENT_SECRET, ACCOUNT_ID).build(),
+    token = await auth.getClientCredentialsToken()
+
+  return token;
+}
