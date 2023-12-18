@@ -2,6 +2,6 @@ node_modules
 .env
 .xlsx
 .DS_Store
-tk.txt
+tk.json
 Spreadsheets/
 Spreadsheets/.DS_Store
