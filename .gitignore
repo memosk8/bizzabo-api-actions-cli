@@ -2,5 +2,6 @@ node_modules
 .env
 .xlsx
 .DS_Store
+tk.txt
 Spreadsheets/
 Spreadsheets/.DS_Store
