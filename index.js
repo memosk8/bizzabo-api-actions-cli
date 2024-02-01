@@ -4,6 +4,7 @@ import BulkEventCheckin from './Registrations/BulkEventCheckin.js'
 import GetTicketHolders from "./Registrations/GetTicketHolders.js"
 import BulkSessionCheckin from "./Sessions/BulkSessionCheckin.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
+import ListAllContacts from "./Contacts/ListAllContacts.js"
 import ListRegTypes from "./Registrations/ListRegTypes.js"
 import GetAllEvents from "./Events/GetAllEvents.js"
 import uploadContacts from './UploadContacts.js'
@@ -30,6 +31,7 @@ do {
   console.log(chalk.green('7 - '), chalk.yellow("Get all active ticket holders"))
   console.log(chalk.green('8 - '), chalk.yellow("Get all account events"))
   console.log(chalk.green('9 - '), chalk.yellow("Bulk session checkin"))
+  console.log(chalk.green('10 - '), chalk.yellow("List all contacts"))
   console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
 
   opt = prompt(chalk.greenBright('Select an option: '))
@@ -267,7 +269,7 @@ do {
       console.log(chalk.green('=================================\n'))
       process.exit(1)
 
-    /* ------------------------------------------------------- */      
+    /* ------------------------------------------------------- */
 
     case '8':
       var events
@@ -293,7 +295,7 @@ do {
       console.log(events)
       process.exit(1)
 
-    /* ------------------------------------------------------- */      
+    /* ------------------------------------------------------- */
 
     case '9':
       do {
@@ -338,8 +340,41 @@ do {
 
     /* ------------------------------------------------------- */
 
+    case '10':
+      var contacts
+      do {
+        console.clear()
+        console.log(chalk.yellow.bold('\nGet all contacts from the event!\n'))
+        var tk = prompt(chalk.green('API token: '))
+        var eventId = prompt(chalk.green('Event ID #: '))
+        console.log()
+        contacts = await ListAllContacts(tk, eventId)
+        if (contacts.status === false) {
+          console.error(chalk.bgBlack.red.bold('\n', contacts.message))
+        }
+        await sleep(2000)
+      } while (contacts.status === false)
+
+      var write
+      do {
+        console.clear()
+        write = prompt(chalk.bgBlack.blueBright.bold('\n', 'Write contacts to spreadsheet?? (Y/N)'))
+      }
+      while (write === undefined)
+
+      console.log()
+
+      // write contacts to spreadsheet
+      var workbook = xlsx.utils.book_new()
+      var worksheet = xlsx.utils.json_to_sheet(contacts)
+      xlsx.utils.book_append_sheet(workbook, worksheet, "All Contacts")
+      xlsx.writeFile(workbook, `${process.cwd()}/All_contacts_${eventId}.xlsx`)
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
     default:
-      console.log('\n', chalk.bgRed.black("invalid option"))
+      console.log('\n', chalk.bgGreen.black("invalid option"))
       await sleep(2000)
       break
 

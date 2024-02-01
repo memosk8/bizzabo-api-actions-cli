@@ -43,8 +43,8 @@ export default async function BulkEventCheckin(registrations, token) {
           'firstName': reg['First Name'],
           'lastName': reg['Last Name'],
           'email': reg['Email Address'],
-        },
-        'checkedin': true,
+          'company': reg['Company']
+        }
       }),
     }
 
