@@ -6,9 +6,11 @@ import BulkSessionCheckin from "./Sessions/BulkSessionCheckin.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
 import ListAllContacts from "./Contacts/ListAllContacts.js"
 import ListRegTypes from "./Registrations/ListRegTypes.js"
+import saveToSpreadsheet from "./saveToSpreadsheet.js"
 import GetAllEvents from "./Events/GetAllEvents.js"
 import uploadContacts from './UploadContacts.js'
 import PromptSync from 'prompt-sync'
+import mainMenu from "./mainMenu.js"
 import readFile from "./readFile.js"
 import sleep from "./sleep.js"
 import chalk from "chalk"
@@ -17,26 +19,11 @@ import fs from "fs"
 
 const prompt = PromptSync({ sigint: true })
 
-/* main menu */
-
-let opt = ''
+let op = ''
 do {
-  console.clear()
-  console.log(chalk.green('1 - '), chalk.yellow("Bulk Event Checkin"))
-  console.log(chalk.green('2 - '), chalk.yellow("Bulk Upload Contacts"))
-  console.log(chalk.green('3 - '), chalk.yellow("Get magic links"))
-  console.log(chalk.green('4 - '), chalk.yellow("Bulk Cancel Tickets"))
-  console.log(chalk.green('5 - '), chalk.yellow("Bulk Add Registrations"))
-  console.log(chalk.green('6 - '), chalk.yellow("List event registration types"))
-  console.log(chalk.green('7 - '), chalk.yellow("Get all active ticket holders"))
-  console.log(chalk.green('8 - '), chalk.yellow("Get all account events"))
-  console.log(chalk.green('9 - '), chalk.yellow("Bulk session checkin"))
-  console.log(chalk.green('10 - '), chalk.yellow("List all contacts"))
-  console.log(chalk.green('0 - '), chalk.redBright("Exit\n"))
+  op = mainMenu(prompt)
 
-  opt = prompt(chalk.greenBright('Select an option: '))
-
-  switch (opt) {
+  switch (op) {
 
     case '0':
       console.log(chalk.redBright("\nExiting...\n"))
@@ -340,35 +327,38 @@ do {
 
     /* ------------------------------------------------------- */
 
-    case '10':
+    case '10': // List all contacts from the event and write them to a spreadsheet
       var contacts
+      var filteredContacts = []
       do {
         console.clear()
         console.log(chalk.yellow.bold('\nGet all contacts from the event!\n'))
         var tk = prompt(chalk.green('API token: '))
         var eventId = prompt(chalk.green('Event ID #: '))
+        var contactList = prompt(chalk.green('Contact list ID #: '))
         console.log()
-        contacts = await ListAllContacts(tk, eventId)
+        contacts = await ListAllContacts(tk, eventId, contactList)
         if (contacts.status === false) {
           console.error(chalk.bgBlack.red.bold('\n', contacts.message))
         }
         await sleep(2000)
       } while (contacts.status === false)
 
-      var write
-      do {
-        console.clear()
-        write = prompt(chalk.bgBlack.blueBright.bold('\n', 'Write contacts to spreadsheet?? (Y/N)'))
-      }
-      while (write === undefined)
-
-      console.log()
-
+      contacts.forEach((contact, i) => {
+        filteredContacts[i] = {
+          ...contact.properties,
+          id: contact.id,
+          created: contact.created
+        }
+      })
       // write contacts to spreadsheet
-      var workbook = xlsx.utils.book_new()
-      var worksheet = xlsx.utils.json_to_sheet(contacts)
-      xlsx.utils.book_append_sheet(workbook, worksheet, "All Contacts")
-      xlsx.writeFile(workbook, `${process.cwd()}/All_contacts_${eventId}.xlsx`)
+      var saved = saveToSpreadsheet(filteredContacts, eventId, 'All_contacts')
+      if (saved) {
+        console.clear()
+        console.log(chalk.bgBlack.green('Contacts spreadsheet saved to : '))
+        console.log(chalk.bgBlack.underline.green(`${process.cwd()}/Spreadsheets/All_contacts_${eventId}.xlsx`))
+      }
+      else console.log(saved)
       process.exit(1)
 
     /* ------------------------------------------------------- */
@@ -376,9 +366,9 @@ do {
     default:
       console.log('\n', chalk.bgGreen.black("invalid option"))
       await sleep(2000)
+      console.clear()
       break
 
   };
 
-} while (opt != '0');
-
+} while (op != '0');
