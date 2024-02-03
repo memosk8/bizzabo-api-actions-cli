@@ -35,7 +35,7 @@ export default async function ListAllContacts(token, eventId, listId) {
 
   try {
     const res = await fetch(baseUrl, options)
-
+    var filteredContacts = []
     if (res.status === 401) return {
       status: false,
       message: "Please check your API token"
@@ -43,9 +43,16 @@ export default async function ListAllContacts(token, eventId, listId) {
     else if (res.status === 200) {
       const body = await res.json()
       const contacts = body.content
+      contacts.forEach((contact, i) => {
+        filteredContacts[i] = {
+          ...contact.properties,
+          id: contact.id,
+          created: contact.created
+        }
+      })
       contacts['status'] = true
       // console.log(contacts)
-      return contacts
+      return filteredContacts
     }
     else return {
       status: false,
@@ -57,4 +64,4 @@ export default async function ListAllContacts(token, eventId, listId) {
   }
 }
 
-// ListAllContacts('e993eebd-f4d6-4b7b-9a77-cb4be83fd1d2','461236','1874933')
+// ListAllContacts('e993eebd-f4d6-4b7b-9a77-cb4be83fd1d2','461236','1874933')0
