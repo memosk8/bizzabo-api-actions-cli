@@ -1,3 +1,5 @@
+import xlsx from "xlsx"
+
 /**
  * @description 
  * Saves the data to a spreadsheet, using the name and the event ID in the worksheet and the filepath 
