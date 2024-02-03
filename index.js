@@ -329,7 +329,6 @@ do {
 
     case '10': // List all contacts from the event and write them to a spreadsheet
       var contacts
-      var filteredContacts = []
       do {
         console.clear()
         console.log(chalk.yellow.bold('\nGet all contacts from the event!\n'))
@@ -344,15 +343,8 @@ do {
         await sleep(2000)
       } while (contacts.status === false)
 
-      contacts.forEach((contact, i) => {
-        filteredContacts[i] = {
-          ...contact.properties,
-          id: contact.id,
-          created: contact.created
-        }
-      })
       // write contacts to spreadsheet
-      var saved = saveToSpreadsheet(filteredContacts, eventId, 'All_contacts')
+      var saved = saveToSpreadsheet(contacts, eventId, 'All_contacts')
       if (saved) {
         console.clear()
         console.log(chalk.bgBlack.green('Contacts spreadsheet saved to : '))
