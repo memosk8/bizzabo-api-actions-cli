@@ -3,5 +3,5 @@ node_modules
 .xlsx
 .DS_Store
 tk.json
-Spreadsheets/
+/Spreadsheets
 Spreadsheets/.DS_Store
