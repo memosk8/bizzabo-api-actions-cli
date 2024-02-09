@@ -21,6 +21,7 @@ function mainMenu(prompt) {
   console.log(chalk.green('8  - '), chalk.yellow("Get all account events"))
   console.log(chalk.green('9  - '), chalk.yellow("Bulk session checkin"))
   console.log(chalk.green('10 - '), chalk.yellow("List all contacts"))
+  console.log(chalk.green('11 - '), chalk.yellow("Update contacts from xlsx file"))
   console.log()
   opt = prompt(chalk.greenBright('Select an option: '))
   return opt

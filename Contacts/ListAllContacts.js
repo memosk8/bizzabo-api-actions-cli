@@ -14,7 +14,7 @@ import fetch from "node-fetch"
  * @param {Number} [listId]
  * This value is optional, but if provided it will be added to the call to filter contact lists
  * 
- * @returns {[Object]} Array of objects that represent 
+ * @returns {Array} Array of objects that represent 
  * the contacts from the specified event with the provided filters
  */
 
@@ -51,6 +51,7 @@ export default async function ListAllContacts(token, eventId, listId) {
         }
       })
       contacts['status'] = true
+      contacts['message'] = "GET contacts OK"
       // console.log(contacts)
       return filteredContacts
     }
@@ -64,4 +65,4 @@ export default async function ListAllContacts(token, eventId, listId) {
   }
 }
 
-// ListAllContacts('e993eebd-f4d6-4b7b-9a77-cb4be83fd1d2','461236','1874933')0
+// ListAllContacts('8f8f33a8-091a-4db7-8768-20b75a182031','550565')

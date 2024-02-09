@@ -6,6 +6,7 @@ import BulkSessionCheckin from "./Sessions/BulkSessionCheckin.js"
 import GetMagicLinks from "./Registrations/GetMagicLinks.js"
 import ListAllContacts from "./Contacts/ListAllContacts.js"
 import ListRegTypes from "./Registrations/ListRegTypes.js"
+import UpdateContacts from "./Contacts/UpdateContacts.js"
 import saveToSpreadsheet from "./saveToSpreadsheet.js"
 import GetAllEvents from "./Events/GetAllEvents.js"
 import uploadContacts from './UploadContacts.js'
@@ -16,6 +17,7 @@ import sleep from "./sleep.js"
 import chalk from "chalk"
 import xlsx from "xlsx"
 import fs from "fs"
+import writeFile from "./writeFile.js"
 
 const prompt = PromptSync({ sigint: true })
 
@@ -244,6 +246,7 @@ do {
       } while (ticketHolders.error === 'BAD_TOKEN' || ticketHolders.error === 'NOT_FOUND')
 
       // write registrations to spreadsheet
+      writeFile(data, fileName)
       var workbook = xlsx.utils.book_new()
       var worksheet = xlsx.utils.json_to_sheet(ticketHolders)
       xlsx.utils.book_append_sheet(workbook, worksheet, "magic links")
@@ -351,6 +354,27 @@ do {
         console.log(chalk.bgBlack.underline.green(`${process.cwd()}/Spreadsheets/All_contacts_${eventId}.xlsx`))
       }
       else console.log(saved)
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
+    case '11':
+      console.clear()
+      console.log(chalk.yellow.bold('\nUpdate contacts with custom properties!\n'))
+      console.log(chalk.yellow('\nIt is recommended to first create a static or dynamic list on the dashboard with the contacts to update for simplicity\n'))
+      var path = prompt('File path: ')
+      var tk = prompt('API token: ')
+      var eventId = prompt('Event #ID: ')
+      var listId = prompt('List ID#: ')
+      // var fileContacts = readFile(path)
+      var contactsToUpdate = await ListAllContacts(tk, eventId, listId)
+      const updatedContacts = await UpdateContacts(tk, eventId, contactsToUpdate)
+
+      console.clear()
+      console.log(updatedContacts)
+      /*       await UpdateContacts(tk, eventID, contacts)
+            writeFile() */
+      console.log('\n==============\n Bulk Update Contacts complete \n==============\n')
       process.exit(1)
 
     /* ------------------------------------------------------- */
