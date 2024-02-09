@@ -57,7 +57,7 @@ export default async function ListAllContacts(token, eventId, listId) {
     }
     else return {
       status: false,
-      message: "Please check the event ID"
+      message: "There was an error. Please check your input"
     }
   }
   catch (error) {
