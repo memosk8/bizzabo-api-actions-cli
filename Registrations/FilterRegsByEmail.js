@@ -52,7 +52,6 @@ export default async function FilterRegsByEmail(token, eventId, contacts) {
         try {
           for (let i = 0; i < body.content.length - 1; i++) {
             const ticket = body.content[i];
-
             tickets.push({
               'Order Number': ticket.orderId,
               'Ticket Number': ticket.id
