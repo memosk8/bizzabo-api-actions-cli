@@ -35,8 +35,7 @@ export default async function UpdateContacts(token, eventId, contacts) {
         "properties": {
           "email": contact['email'],
           "firstName": contact['firstName'],
-          "lastName": contact['lastName'],
-          "oneLiner": contact['oneLiner']
+          "lastName": contact['lastName']
         }
       })
     }

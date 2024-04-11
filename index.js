@@ -1,5 +1,6 @@
 import BulkAddRegistrations from "./Registrations/BulkAddRegistration.js"
 import BulkCancelTickets from "./Registrations/BulkCancelTickets.js"
+import FilterRegsByEmail from './Registrations/FilterRegsByEmail.js'
 import BulkEventCheckin from './Registrations/BulkEventCheckin.js'
 import GetTicketHolders from "./Registrations/GetTicketHolders.js"
 import BulkSessionCheckin from "./Sessions/BulkSessionCheckin.js"
@@ -366,7 +367,7 @@ do {
       var tk = prompt('API token: ')
       var eventId = prompt('Event #ID: ')
       var listId = prompt('List ID#: ')
-      // var fileContacts = readFile(path)
+      //var fileContacts = readFile(path)
       var contactsToUpdate = await ListAllContacts(tk, eventId, listId)
       const updatedContacts = await UpdateContacts(tk, eventId, contactsToUpdate)
 
@@ -374,6 +375,26 @@ do {
       console.log(updatedContacts)
       /*       await UpdateContacts(tk, eventID, contacts)
             writeFile() */
+      console.log('\n==============\n Bulk Update Contacts complete \n==============\n')
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
+    /* ------------------------------------------------------- */
+
+    case '12':
+      console.clear()
+      console.log(chalk.yellow.bold('\nCancel tickets from a list of emails!\n'))
+      console.log(chalk.yellow('\nThis will get all of the ticket and order IDs of each contact email and then cancell all of them\n'))
+      var path = prompt('File path: ')
+      var tk = prompt('API token: ')
+      var eventId = prompt('Event #ID: ')
+      var fileContacts = readFile(path)
+      const tickets = await FilterRegsByEmail(tk, eventId, fileContacts)
+      let cancelled = BulkCancelTickets(eventId,tickets,tk)
+      
+      console.clear()
+      console.log(cancelled)
       console.log('\n==============\n Bulk Update Contacts complete \n==============\n')
       process.exit(1)
 
