@@ -44,7 +44,7 @@ export default async function BulkCancelTickets(eventId, registrations, token) {
         return 'BAD_TOKEN'
       }
       console.log(chalk.yellow(res.status))
-      console.log(chalk.red(`Cancelled Ticket #${reg['Ticket Number']}`))
+      console.log(chalk.red(`Canceled Ticket #${reg['Ticket Number']}`))
     }
     catch (error) {
       console.error(error)

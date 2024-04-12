@@ -391,11 +391,7 @@ do {
       var eventId = prompt('Event #ID: ')
       var fileContacts = readFile(path)
       const tickets = await FilterRegsByEmail(tk, eventId, fileContacts)
-      let cancelled = BulkCancelTickets(eventId,tickets,tk)
-      
-      console.clear()
-      console.log(cancelled)
-      console.log('\n==============\n Bulk Update Contacts complete \n==============\n')
+      let cancelled = await BulkCancelTickets(eventId,tickets,tk)
       process.exit(1)
 
     /* ------------------------------------------------------- */

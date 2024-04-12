@@ -3,13 +3,17 @@ import fetch from "node-fetch"
 /**
  * 
  * @description
- * Get all registranst magic links into a spreadsheet 
+ * Creates a new array of objects for all the tickets assigned to each email except 
+ * for the first ticket assigned
  * 
  * @param {String} token 
  * The API token 
  * 
  * @param {String} eventId 
  * The event ID to get registrations
+ * 
+ * @param {Array[Object]} contacts 
+ * List of emails
  * 
  * @returns
  * BAD_TOKEN if the provided token is invalid (Error 401)
@@ -52,10 +56,12 @@ export default async function FilterRegsByEmail(token, eventId, contacts) {
         try {
           for (let i = 0; i < body.content.length - 1; i++) {
             const ticket = body.content[i];
-            tickets.push({
-              'Order Number': ticket.orderId,
-              'Ticket Number': ticket.id
-            })
+            if (ticket.validity === 'valid') {
+              tickets.push({
+                'Order Number': ticket.orderId,
+                'Ticket Number': ticket.id
+              })
+            }
           }
         } catch (error) {
           console.error(error)
