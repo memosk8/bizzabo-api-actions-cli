@@ -1,6 +1,8 @@
 import chalk from "chalk"
 
 /**
+ * @description
+ * Prints the menu with the options and awaits for the user input
  * 
  * @returns {string}
  * The user input that represents the option to select
@@ -23,6 +25,8 @@ function mainMenu(prompt) {
   console.log(chalk.green('10 - '), chalk.yellow("List all contacts"))
   console.log(chalk.green('11 - '), chalk.yellow("Update contacts from xlsx file"))
   console.log(chalk.green('12 - '), chalk.yellow("Get tickets from each email to cancel (except the first one assigned)"))
+  console.log(chalk.green('13 - '), chalk.yellow("Bulk Session registration"))
+  console.log(chalk.green('14 - '), chalk.yellow("Bulk Session Unregister tickets"))
   console.log()
   opt = prompt(chalk.greenBright('Select an option: '))
   return opt

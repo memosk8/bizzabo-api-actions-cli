@@ -76,4 +76,18 @@ export default async function FilterRegsByEmail(token, eventId, contacts) {
   return tickets
 }
 
+/*
+const tickets = await FilterRegsByEmail(
+  '935d4cf1-dd55-4e83-86f6-84778f90c12d',
+  '573891',
+  [
+    { 'Email Address': 'kyra.sheehan+ig@gmail.com' },
+    { 'Email Address': 'kat.finch+cultureamp@propelleraero.com.au' },
+    { 'Email Address': 'aslisevinc+newsletter@gmail.com' }
+  ]
+)
+
+await BulkCancelTickets('573891', tickets, '935d4cf1-dd55-4e83-86f6-84778f90c12d')
+*/
+
 /* @TODO:  loop pagination */

@@ -22,16 +22,3 @@ export default function writeFile(data, worksheetName, fileName) {
     }
   }
 }
-
-writeFile([
-  {
-    'Name': "Guillermo",
-    'Last Name': "Lopez",
-    'Age': 30
-  },
-  {
-    'Name': "Margarita",
-    'Last Name': "Robles",
-    'Age': 31
-  }
-], 'Contacts', 'Contacts')

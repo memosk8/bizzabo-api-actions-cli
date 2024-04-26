@@ -11,6 +11,7 @@ import UpdateContacts from "./Contacts/UpdateContacts.js"
 import saveToSpreadsheet from "./saveToSpreadsheet.js"
 import GetAllEvents from "./Events/GetAllEvents.js"
 import uploadContacts from './UploadContacts.js'
+import writeFile from "./writeFile.js"
 import PromptSync from 'prompt-sync'
 import mainMenu from "./mainMenu.js"
 import readFile from "./readFile.js"
@@ -18,7 +19,8 @@ import sleep from "./sleep.js"
 import chalk from "chalk"
 import xlsx from "xlsx"
 import fs from "fs"
-import writeFile from "./writeFile.js"
+import BulkSessionRegistration from "./Sessions/BulkSessionRegistration.js"
+import BulkTicketSessionRemoval from "./Sessions/BulkTicketSessionRemoval.js"
 
 const prompt = PromptSync({ sigint: true })
 
@@ -380,8 +382,6 @@ do {
 
     /* ------------------------------------------------------- */
 
-    /* ------------------------------------------------------- */
-
     case '12':
       console.clear()
       console.log(chalk.yellow.bold('\nCancel tickets from a list of emails!\n'))
@@ -390,8 +390,36 @@ do {
       var tk = prompt('API token: ')
       var eventId = prompt('Event #ID: ')
       var fileContacts = readFile(path)
-      const tickets = await FilterRegsByEmail(tk, eventId, fileContacts)
-      let cancelled = await BulkCancelTickets(eventId,tickets,tk)
+      var tickets = await FilterRegsByEmail(tk, eventId, fileContacts)
+      var cancelled = await BulkCancelTickets(eventId, tickets, tk)
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
+    case '13':
+      console.clear()
+      console.log(chalk.yellow.bold('\nBulk Session registration\n'))
+      var path = prompt('File path: ')
+      var token = prompt('API token: ')
+      var eventId = prompt('Event #ID: ')
+      var sessionId = prompt('Session #ID: ')
+      var tickets = readFile(path)
+      var registered = await BulkSessionRegistration(tickets, token, eventId, sessionId)
+      if (registered) { console.log(chalk.green('\t==Bulk Session Registration Completed==')) }
+      process.exit(1)
+
+    /* ------------------------------------------------------- */
+
+    case '14':
+      console.clear()
+      console.log(chalk.yellow.bold('\nBulk Ticket removal from session\n'))
+      var path = prompt('File path: ')
+      var token = prompt('API token: ')
+      var eventId = prompt('Event #ID: ')
+      var sessionId = prompt('Session #ID: ')
+      var tickets = readFile(path)
+      var registered = await BulkTicketSessionRemoval(tickets, token, eventId, sessionId)
+      if (registered) { console.log(chalk.green('\t==Bulk session ticket removal completed==')) }
       process.exit(1)
 
     /* ------------------------------------------------------- */
